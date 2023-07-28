@@ -1,26 +1,21 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import Union
 from fastapi import Form
 from datetime import datetime
 
 class Replys(BaseModel):
-    voteID: Optional[int] = None
-    createdAt: datetime
-    updatedAt: datetime
+    id: Union[int, None] = None #   Optional[int] = None
+    createdAt: datetime = datetime.now()
     content: str
-    author: str
-    voteAuthorID: str
+    authorName: str
     passwd: str
 
-    class Config:
-        schema_extra = {
-            "example": {
-                "voteID": 1,
-                "createdAt": "2023-07-27",
-                "updatedAt": "2023-07-27",
-                "content": "샘플 댓글 내용",
-                "author": "John Doe",
-                "voteAuthorID": "john_doe",
-                "passwd": "샘플 비밀번호",
-            }
-        }
+    @classmethod
+    def as_form(
+        cls,
+        content: str = Form(...),
+        authorName: str = Form(...),
+        passwd: str = Form(...),
+    ):
+        return cls(content=content, authorName=authorName,
+                   passwd=passwd)

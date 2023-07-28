@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>오늘의 테이블 상세</title>
+    <!-- Add your CSS stylesheets here to improve the appearance -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* Add your custom styles here */
+        body {
+            padding-top: 20px;
+        }
+
+        .ota-header {
+            display: flex;
+            justify-content: center;
+        }
+
+        .ota-card {
+            width: 80%;
+            /* Set card width to 80% */
+            margin: 0 auto;
+            /* Center the card */
+            margin-bottom: 20px;
+        }
+
+        /* Styling for the title */
+        .ota-title {
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            margin: 0;
+            padding: 10px 0;
+            color: #333;
+            /* You can change the color as per your preference */
+            width: 100%;
+            cursor: pointer;
+            /* Add cursor pointer for clickable effect */
+            text-decoration: none;
+            /* Remove underline for links */
+        }
+
+        /* Additional styling for the container */
+        .ota-container {
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            white-space: nowrap; /* Prevent elements from wrapping */
+            overflow-x: auto; /* Add a horizontal scrollbar when necessary */
+        }
+
+        /* Styling for the OTA list item */
+        .ota-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            /* Background color for the list item */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Add a subtle shadow */
+            width: 75%;
+            /* Set width to 60% of the parent card */
+            margin: 0 auto;
+            /* Center the ota-item */
+        }
+
+        /* Styling for the Author and Store */
+        .ota-details {
+            margin-top: 10px;
+            color: #888;
+            /* You can change the color as per your preference */
+        }
+
+        /* Responsive layout */
+        @media (max-width: 768px) {
+            .ota-card {
+                width: 80%;
+                /* Adjust card width to 100% for small screens */
+            }
+        }
+
+        #current-date {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 19pt;
+            margin-bottom: 20px;
+            /* Add any additional styles as needed */
+        }
+
+        /* Add a horizontal line between "오늘의 테이블" and "current-date" */
+        .separator {
+            width: 100%;
+            height: 1px;
+            background-color: #ccc;
+            margin: 18px 0;
+        }
+
+        /* Style for the card title inside ota-card */
+        .card-title-inside {
+            font-size: 34pt;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center; /* Align the card title to center */
+        }
+
+        /* Style for the label inside ota-details */
+        .label {
+            font-weight: bold;
+            text-align: center;
+            color: #333; /* Change the label color to be more visible */
+            margin-bottom: 15px;
+            margin-top: 15px;
+            font-size: 30px;
+        }
+
+        /* Add horizontal line between ota-item elements */
+        .item-divider {
+            width: 100%;
+            height: 1px;
+            background-color: #ccc;
+            margin: 10px 0;
+        }
+
+        /* Style for the content inside ota-item */
+        .ota-content {
+            text-align: center;
+            margin-left: 10px;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <!-- Your header content here -->
+    </header>
+
+    <div>
+        <main class="container">
+            <hr>
+            <section class="container-fluid">
+                <!-- OTA Title -->
+                <div class="ota-header">
+                    <a href="http://localhost:8000/" class="ota-title">오늘의 테이블</a>
+                </div>
+                <!-- Add a horizontal line here -->
+                <div class="separator"></div>
+            </section>
+
+            <div id="current-date"></div>
+
+            {% if ota %}
+                <section class="container-fluid ota-container">
+                    <!-- OTA Content in Card Format -->
+                    <div class="ota-card">
+                        <div class="card-title-inside">{{ ota.title }}</div>
+                        <div class="ota-item">
+                            <div class="label">먹을 장소 이름!</div>
+                            <p class="ota-content">{{ ota.storeName }}</p>
+                            <div class="item-divider"></div>
+                            <div class="label">모집자!</div>
+                            <p class="ota-content">{{ ota.authorName }}</p>
+                            <div class="item-divider"></div>
+                        </div>
+                    </div>
+                </section>
+            {% else %}
+                <section class="container-fluid ota-container">
+                    <h2 align="center">등록된 테이블이 없어요!<br><br> 상단의 "오늘의 테이블"을 클릭해주세요!</h2>
+                </section>
+            {% endif %}
+        </main>
+    </div>
+
+    <footer>
+        <!-- Your footer content here -->
+    </footer>
+
+    <!-- Add your JavaScript here to handle the "Add OTA" button click -->
+    <script>
+        // JavaScript를 사용하여 날짜를 표시하는 함수 추가
+        function showCurrentDate() {
+            const currentDate = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = currentDate.toLocaleDateString('ko-KR', options);
+            document.getElementById('current-date').textContent = `${formattedDate}`;
+        }
+
+        // 페이지가 로드되면 showCurrentDate 함수를 호출하여 날짜를 표시합니다.
+        window.onload = showCurrentDate;
+    </script>
+
+</body>
+
+</html>
