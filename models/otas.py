@@ -1,10 +1,11 @@
 from pydantic import BaseModel
 from fastapi import Form
 from datetime import datetime
-from beanie import Document
+from beanie import Document, PydanticObjectId 
 
 
 class OTA(Document):
+    id: PydanticObjectId 
     createdAt: datetime = datetime.now()
     title: str
     authorName: str

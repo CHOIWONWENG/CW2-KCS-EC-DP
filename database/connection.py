@@ -3,7 +3,7 @@ from typing import Any, List, Optional
 from beanie import init_beanie, PydanticObjectId 
 from models.otas import OTA
 from motor.motor_asyncio import AsyncIOMotorClient
-from pydantic import BaseSettings, BaseModel
+from pydantic import BaseSettings
 
 class Settings(BaseSettings):
     DATABASE_URL: Optional[str] = None
@@ -22,9 +22,9 @@ class Database:
         self.model = model
 
     # 생성처리(레코드 하나[문서의 인스턴스]를 데이터베이스 컬렉션에 추가한다
-    async def save(self, document) -> None:
+    async def save(self, document: Any) -> None:
         await document.create()
-        return
+        return None
     
     # 조회 처리(get_all은 인수가 없고 컬렉션의모든 레코드를 불러온다)
     async def get(self, id: PydanticObjectId) -> Any:
