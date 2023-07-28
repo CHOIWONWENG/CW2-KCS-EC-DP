@@ -1,10 +1,11 @@
 from pydantic import BaseModel
-from typing import Union, List
 from fastapi import Form
 from datetime import datetime
+from beanie import Document
 
-class OTA(BaseModel):
-    id: Union[int, None] = None #   Optional[int] = None
+
+class OTA(Document):
+    id: int #   Optional[int] = None
     createdAt: datetime = datetime.now()
     title: str
     authorName: str
@@ -20,3 +21,5 @@ class OTA(BaseModel):
     ):
         return cls(title=title, authorName=authorName,
                    storeName=storeName)
+    class Settings:
+        name = "otas"
