@@ -5,7 +5,6 @@ from beanie import Document
 
 
 class OTA(Document):
-    id: int #   Optional[int] = None
     createdAt: datetime = datetime.now()
     title: str
     authorName: str
