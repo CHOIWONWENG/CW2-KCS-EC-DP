@@ -158,10 +158,12 @@
                             <div class="card-title-wrapper">
                                 <a href="http://localhost:8000/otas/{{ ota.id }}" class="card-title">{{ ota.title }}</a>
                             </div>
-                            <p class="card-text">{{ ota.otaDescription }}</p>
                             <div class="ota-details">
                                 <strong>먹을 가게: </strong>{{ ota.storeName }}<br>
                                 <strong>모집자!: </strong>{{ ota.authorName }}
+                            </div>
+                            <div class="card-title-wrapper">
+                                <a href="http://localhost:8000/otas/{{ ota.id }}" class="card-title">모인 사람 수: {{ ota.memberCount }}</a>
                             </div>
                         </div>
                     </div>
