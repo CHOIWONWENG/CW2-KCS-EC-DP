@@ -156,25 +156,30 @@
             <div id="current-date"></div>
 
             {% if ota %}
-                <section class="container-fluid ota-container">
-                    <!-- OTA Content in Card Format -->
-                    <div class="ota-card">
-                        <div class="card-title-inside">{{ ota.title }}</div>
-                        <div class="ota-item">
-                            <div class="label">먹을 장소 이름!</div>
-                            <p class="ota-content">{{ ota.storeName }}</p>
-                            <div class="item-divider"></div>
-                            <div class="label">모집자!</div>
-                            <p class="ota-content">{{ ota.authorName }}</p>
-                            <div class="item-divider"></div>
-                        </div>
+            <section class="container-fluid ota-container">
+                <!-- OTA Content in Card Format -->
+                <div class="ota-card">
+                    <div class="card-title-inside">{{ ota.title }}</div>
+                    <div class="ota-item">
+                        <div class="label">먹을 장소 이름!</div>
+                        <p class="ota-content">{{ ota.storeName }}</p>
+                        <div class="item-divider"></div>
+                        <div class="label">모집자!</div>
+                        <p class="ota-content">{{ ota.authorName }}</p>
+                        <div class="item-divider"></div>
+
+                      
+                            <button type="button" class="btn btn-danger" style="display: block; margin: 0 auto;" onclick="deleteTable()">테이블 삭제</button>
+                  
                     </div>
-                </section>
+                </div>
+            </section>
             {% else %}
                 <section class="container-fluid ota-container">
                     <h2 align="center">등록된 테이블이 없어요!<br><br> 상단의 "오늘의 테이블"을 클릭해주세요!</h2>
                 </section>
             {% endif %}
+            <div class="separator"></div>
         </main>
     </div>
 
@@ -184,18 +189,43 @@
 
     <!-- Add your JavaScript here to handle the "Add OTA" button click -->
     <script>
-        // JavaScript를 사용하여 날짜를 표시하는 함수 추가
+        // JavaScript to show the current date
         function showCurrentDate() {
             const currentDate = new Date();
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             const formattedDate = currentDate.toLocaleDateString('ko-KR', options);
             document.getElementById('current-date').textContent = `${formattedDate}`;
         }
-
-        // 페이지가 로드되면 showCurrentDate 함수를 호출하여 날짜를 표시합니다.
+    
+        // Call showCurrentDate function when the page is loaded
         window.onload = showCurrentDate;
+    
+        // Function to handle the "Delete Table" button click
+        function deleteTable() {
+        // Extract the ota_id from the current URL
+        const otaId = window.location.pathname.split('/').pop();
+
+        // Send an HTTP DELETE request to the server
+        fetch(`http://localhost:8000/otas/${otaId}/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((response) => {
+            // Check if the deletion is successful (status code 200)
+            if (response.ok) {
+                window.location.href = `http://localhost:8000/`;
+            } else {
+                // Handle the error case, if needed
+                console.error('Error:', response.status);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
     </script>
 
 </body>
-
 </html>

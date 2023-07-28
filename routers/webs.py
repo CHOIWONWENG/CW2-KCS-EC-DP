@@ -9,6 +9,7 @@ templates = Jinja2Templates(directory='templates/')
 
 @router.get('/')
 @router.post('/')
+@router.delete('/')
 async def retrieve_otas(request: Request):
     return templates.TemplateResponse(
         "main.html",
